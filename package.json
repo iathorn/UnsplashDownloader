@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
+    "axios-curlirize": "^1.1.0",
     "dotenv": "^7.0.0",
     "isomorphic-fetch": "^2.2.1",
     "koa": "^2.7.0",
@@ -20,7 +21,9 @@
     "@babel/preset-env": "^7.3.4"
   },
   "scripts": {
+    "build": "babel src -d dist",
     "build:watch": "babel src --watch -d dist",
+    "start": "NODE_PATH=dist node ./dist",
     "start:dev": "NODE_PATH=dist npx nodemon ./dist"
   }
 }
