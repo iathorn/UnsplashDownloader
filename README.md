@@ -1,6 +1,4 @@
-# BackgroundChanger
-
-with unsplash api
+# UnsplashDownloader
 
 location: $HOME/Pictures
 
