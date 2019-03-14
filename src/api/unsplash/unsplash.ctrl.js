@@ -26,6 +26,8 @@ export const getPhotoList = async ctx => {
     for (let i = 0; i < json.length; i++) {
       await downloadPhoto(json[i], i, json.length);
     }
+
+    ctx.status = 200;
   } catch (e) {
     console.log(e);
     ctx.throw(e, 500);

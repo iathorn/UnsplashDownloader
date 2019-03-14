@@ -1,9 +1,12 @@
+import "@babel/polyfill";
 import Koa from "koa";
 import Router from "koa-router";
 import bodyParser from "koa-bodyparser";
 import dotenv from "dotenv";
 import axios from "axios";
 import curlirize from "axios-curlirize";
+import fs from 'fs';
+import path from 'path';
 import api from "./api";
 
 dotenv.config();
@@ -20,12 +23,18 @@ router.use("/api", api.routes());
 app.use(bodyParser());
 app.use(router.routes()).use(router.allowedMethods());
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log("port:", port);
+  const files = fs.readdirSync(path.join(__dirname, `../../`));
+  files.forEach(file => {
+    if(path.extname(file) === '.jpg') {
+      fs.unlinkSync(path.join(__dirname, `../../${file}`))
+    }
+  })
   axios
-    .get("http://localhost:4000/api/unsplash")
+    .get(`http://localhost:${port}/api/unsplash`)
     .then(res => {
-      console.log(res);
+      console.log('success');
     })
     .catch(err => console.log(err));
 });

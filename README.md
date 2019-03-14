@@ -2,16 +2,20 @@
 
 with unsplash api
 
-TODO
-
-remove all .jpg extension files before doing api things.
-
 location: $HOME/Pictures
 
 ```
 cd $HOME/Pictures
 git clone https://github.com/evals4dead/UnsplashDownloader
 ```
+
+go to this link: https://unsplash.com/developers
+
+register new application for unsplash api
+
+make file: .env (on a root of this directory)
+
+see .env.sample and write .env
 
 1. `yarn`
 2. `yarn build`
@@ -21,3 +25,6 @@ git clone https://github.com/evals4dead/UnsplashDownloader
 6. ```bash
 */30 * * * * /bin/zsh $HOME/Pictures/UnsplashDownloader/exec.sh >> /tmp/cron.out
 ```
+
+// eveery 30 minutes, this server will be turned on by cronjob.
+// so the recommended port is 1234. (the port that is unusually used for your development.)
