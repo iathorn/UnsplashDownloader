@@ -24,6 +24,8 @@ app.listen(port, () => {
   console.log("port:", port);
   axios
     .get("http://localhost:4000/api/unsplash")
-    .then(res => console.log("hello", res))
+    .then(res => {
+      console.log(res);
+    })
     .catch(err => console.log(err));
 });

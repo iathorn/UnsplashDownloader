@@ -23,7 +23,7 @@
   "scripts": {
     "build": "babel src -d dist",
     "build:watch": "babel src --watch -d dist",
-    "start": "NODE_PATH=dist node ./dist",
+    "start": "NODE_PATH=dist /usr/local/bin/node ./dist",
     "start:dev": "NODE_PATH=dist npx nodemon ./dist"
   }
 }

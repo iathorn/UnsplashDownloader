@@ -18,35 +18,41 @@ const unsplash = new Unsplash({
 export const getPhotoList = async ctx => {
   console.log("getPhotoList");
 
-  await unsplash.photos
-    .listPhotos(1, 15, "latest")
-    .then(toJson)
-    .then(json => {
-      ctx.body = json;
-      ctx.status = 200;
-      downloadPhoto(json);
-    })
-    .catch(err => {
-      ctx.throw(err, 500);
-    });
+  try {
+    const json = await unsplash.photos.listPhotos(1, 15, "latest").then(toJson);
+
+    // json => array
+
+    for (let i = 0; i < json.length; i++) {
+      await downloadPhoto(json[i], i, json.length);
+    }
+  } catch (e) {
+    console.log(e);
+    ctx.throw(e, 500);
+  }
 };
 
 // photoInfos: array of PhotoInfo
-const downloadPhoto = async photoInfos => {
+const downloadPhoto = async (photoInfo, index, length) => {
   try {
-    for (let i = 0; i < photoInfos.length; i++) {
-      await axios({
-        method: "get",
-        url: photoInfos[i].urls.full,
-        responseType: "stream"
-      }).then(response => {
-        response.data.pipe(
-          fs.createWriteStream(
-            path.join(__dirname, `../../../../${photoInfos[i].id}.jpg`)
-          )
-        );
-      });
-    }
+    const photoStream = await axios({
+      method: "get",
+      url: photoInfo.urls.full,
+      responseType: "stream"
+    });
+
+    const writeStream = fs.createWriteStream(
+      path.join(__dirname, `../../../../${photoInfo.id}.jpg`)
+    );
+
+    photoStream.data.pipe(writeStream).on("finish", () => {
+      if (index === length - 1) {
+        setTimeout(() => {
+          console.log("exit!");
+          process.exit(0);
+        }, 3000);
+      }
+    });
   } catch (e) {
     console.log(e);
   }
