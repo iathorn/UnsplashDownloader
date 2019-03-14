@@ -27,6 +27,8 @@ export const getPhotoList = async ctx => {
       await downloadPhoto(json[i], i, json.length);
     }
 
+    console.log("logging...");
+
     ctx.status = 200;
   } catch (e) {
     console.log(e);
@@ -47,12 +49,15 @@ const downloadPhoto = async (photoInfo, index, length) => {
       path.join(__dirname, `../../../../${photoInfo.id}.jpg`)
     );
 
-    photoStream.data.pipe(writeStream).on("finish", () => {
+    await photoStream.data.pipe(writeStream).on("finish", () => {
+      console.log("finished!", photoInfo.id);
+
       if (index === length - 1) {
+        console.log("last finished!", photoInfo.id);
         setTimeout(() => {
           console.log("exit!");
           process.exit(0);
-        }, 3000);
+        }, 10000);
       }
     });
   } catch (e) {
