@@ -1,0 +1,26 @@
+{
+  "name": "BackgroundChanger",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^7.0.0",
+    "isomorphic-fetch": "^2.2.1",
+    "koa": "^2.7.0",
+    "koa-body": "^4.1.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "unsplash-js": "^5.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.3.4"
+  },
+  "scripts": {
+    "build:watch": "babel src --watch -d dist",
+    "start:dev": "NODE_PATH=dist npx nodemon ./dist"
+  }
+}
